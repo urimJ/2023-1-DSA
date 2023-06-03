@@ -18,7 +18,7 @@ typedef struct {
 }Element;
 
 Element hash_table[TABLE_SIZE];
-
+ 
 //원본 단어만을 저장하는 구조체
 typedef struct {
 	char word_original[300];
