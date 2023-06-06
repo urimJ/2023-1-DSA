@@ -43,3 +43,12 @@ struct Node* searchNode(struct Node* root, int key) {
         return searchNode(root->right, key);
     }
 }
+
+// 이진 검색 트리를 중위 순회하는 함수
+void inorderTraversal(struct Node* root) {
+    if (root != NULL) {
+        inorderTraversal(root->left);
+        printf("Key: %d, Data: %s\n", root->key, root->data);
+        inorderTraversal(root->right);
+    }
+}

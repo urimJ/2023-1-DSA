@@ -8,11 +8,6 @@
 #define TABLE_SIZE 29989
 #define MAX_WORD_SIZE 100 
 
-//단어 구조체
-//typedef struct {
-//	char word_original[MAX_WORD_SIZE];
-//}Word;
-
 //BST 노드 구조체
 struct Node {
 	int key;
@@ -48,8 +43,6 @@ typedef struct {
 //Hash Table
 Element hash_table[TABLE_SIZE];
 
-
-
 //함수 선언
 void fetch_file();
 void read_file(char* file_name, int index);
@@ -57,6 +50,13 @@ char* refine_word(char* word);
 int hash(char* word);
 void insert_hash(char* word, int file_num, int n_row);
 
+struct Node* createNode(int key, char* data, int file_num, int n_row);
+struct Node* insertNode(struct Node* root, int key, char* data, int file_num, int n_row);
+struct Node* searchNode(struct Node* root, int key);
+void inorderTraversal(struct Node* root);
+
+char* what_to_search();
+void search(struct Node* node);
 
 //비교 변수
 int total_num_of_documents;
