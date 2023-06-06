@@ -5,67 +5,61 @@
 #include <string.h>
 
 #define MAX_FILE_NUM 100
-#define TABLE_SIZE 30000
+#define TABLE_SIZE 29989
+#define MAX_WORD_SIZE 100 
 
-//Hash Table
-typedef struct Element* Element_pointer;
-typedef struct {
-	int            key[300];         // 키 값
-	char         word[300];         // 모두 소문자로 바꾼 단어
-	char         word_original[300];   // 원래 단어
-	Element_pointer link;
-	Docs         docs[MAX_FILE_NUM]; //단어가 포함된 파일의 배열
-}Element;
+//단어 구조체
+//typedef struct {
+//	char word_original[MAX_WORD_SIZE];
+//}Word;
 
-Element hash_table[TABLE_SIZE];
- 
-//원본 단어만을 저장하는 구조체
-typedef struct {
-	char word_original[300];
-}Word;
+//BST 노드 구조체
+struct Node {
+	int key;
+	char* data;
+	int file_num;
+	int n_row;
+	char* sentence;
+	struct Node* left;
+	struct Node* right;
+};
 
-//단어가 포함된 문서와 빈도, 문장을 포함하는 구조체
+//단어가 포함된 문서 번호와 문장을 포함하는 구조체
+typedef struct Docs* Docs_pointer;
 typedef struct {
 	int file_num;
-	int frequency;
-	char sentence[10000];
+	char* sentence;
+	Docs_pointer docs_pointer;
 }Docs;
 
-// 파일 관리
+//해시 테이블에 저장할 구조체
+typedef struct Element* Element_pointer;
+typedef struct {
+	int				key;
+	//Word			word_original;			// 원래 단어
+	char			word[MAX_WORD_SIZE];	// 모두 소문자로 바꾼 단어
+	int				n_row;
+	Element_pointer link;
+	Docs			doc;
+	struct Node* node;
+}Element;
+
+
+//Hash Table
+Element hash_table[TABLE_SIZE];
+
 
 
 //함수 선언
-void call_file();
-void read_file(int file_index);
+void fetch_file();
+void read_file(char* file_name, int index);
+char* refine_word(char* word);
+int hash(char* word);
+void insert_hash(char* word, int file_num, int n_row);
 
 
-
-//
-// 
-// 
-////비교횟수를 저장하는 변수
-//int num_comparison = 0;
-//char file_name[50];
-////중복 제거된 word의 개수 를 저장하는 변수
-//int indexed_word = 0;
-//typedef struct Element* Element_pointer;//기본적으로 파일을 읽어와, 파일의 번호, 단어의 순서, 원본 단어, 수정된 단어를 저장하는 구조체
-//typedef struct Element {
-//   char word[50];
-//   char originword[50];
-//   int file_num;
-//   int word_order;
-//   Element_pointer link;
-//}Element;
-//Element hash_table[TABLE_SIZE];//해시 테이블
-//
-//typedef struct Element2 {//원본 단어만 저장하는 구조체
-//   char word[50];
-//}Element2;
-//Element2 search_table[MAX_FILE_NUM][TABLE_SIZE];//해당 단어의 파일의 번호, 해쉬에 단어를 저장
-//
-//typedef struct Element3 {//몇번째 파일에 어떤 단어가 몇번 들어가는지 저장하는 구조체
-//   int index;
-//   int data;
-//}Element3;
-//Element3 sequence_array[MAX_FILE_NUM];
-//int data_array[MAX_FILE_NUM];
+//비교 변수
+int total_num_of_documents;
+int total_num_of_indexed_words;
+int total_number_of_comparison;
+int num_comparison_search;

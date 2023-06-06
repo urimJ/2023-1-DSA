@@ -1,33 +1,62 @@
 #include "simple_search_engine.h"
 
 void read_file(char* file_name, int index) {
-
 	FILE* file;
-	Word word_original;
-	
-	int line = 0;
+	Element element;
 
-	file = fopen( file_name, "r");
+	int line_num = 1;
 
-	while (1) {
-		if (file == NULL)
-		{
-			printf("%s 화일 오픈 불가\n", file_name);    //화면에 오류 표시
-			
-			break;
-		}
-		fscanf(file, "%s ", word_original.word_original);
-		if (fgetc(file) != '\n') {
-			line++;
-		}
-		
-		strcpy(word_original.word_original, refine_word(word_original.word_original)); // 단어만 저장
-		strcpy(word_original.word_original, _strlwr(word_original.word_original)); // 소문자로 저장
-		//hash_insert(element.word, element.doc.file_num, line); // 해시테이블에 저장
-		printf("%s ", word_original.word_original);
-
-		if (feof(file)) break;
+	element.doc.file_num = index;
+	file = fopen(file_name, "r");
+	if (file == NULL)
+	{
+		printf("%s 파일 오픈 불가\n", file_name);    //화면에 오류 표시
+		return;
 	}
+
+	while (!feof(file)) {
+		char c;
+		int n = 0;
+		char* word = malloc(sizeof(char));
+		//char* word = malloc(sizeof(char));
+		char* element_word;
+		//fscanf(file, "%s", element.word);
+
+		do {
+			c = fgetc(file);
+			if (c == '\n') {
+				line_num++;
+				n--;
+			}
+			*(word + n) = c;
+			n++;
+			if (c == ' ') {
+				*(word + n - 1) = '\0';
+
+				//단어 처리
+				element_word = word;
+
+				strcpy(element.word, element_word);
+
+				printf("a value %s is in row %d\n", element.word, line_num);
+				//printf("element.word: %s\n", element.word);
+				strcpy(element.word, refine_word(element.word));	// 문장부호 제거 및 소문자로 변환
+				insert_hash(element.word, element.doc.file_num, line_num); // 해시테이블에 저장
+				n = 0;
+
+			}
+
+			//c = fgetc(file);
+
+		} while (c != NULL);
+
+
+
+
+		free(word);
+
+	}
+
 	fclose(file);
 
 }
