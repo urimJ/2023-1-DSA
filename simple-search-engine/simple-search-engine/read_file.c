@@ -35,28 +35,15 @@ void read_file(char* file_name, int index) {
 
 				//단어 처리
 				element_word = word;
-
 				strcpy(element.word, element_word);
-
-				printf("a value %s is in row %d\n", element.word, line_num);
-				//printf("element.word: %s\n", element.word);
 				strcpy(element.word, refine_word(element.word));	// 문장부호 제거 및 소문자로 변환
+				//printf("element word: %s\n", element.word);
 				insert_hash(element.word, element.doc.file_num, line_num); // 해시테이블에 저장
 				n = 0;
 
 			}
-
-			//c = fgetc(file);
-
 		} while (c != NULL);
-
-
-
-
 		free(word);
-
 	}
-
 	fclose(file);
-
 }
