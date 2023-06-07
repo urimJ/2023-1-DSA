@@ -48,7 +48,9 @@ struct Node* searchNode(struct Node* root, int key) {
 void inorderTraversal(struct Node* root) {
     if (root != NULL) {
         inorderTraversal(root->left);
-        printf("Key: %d, Data: %s\n", root->key, root->data);
+        printf("Key: %d, Data: %s, File_num: %d, N_row: %d\n", root->key, root->data, root->file_num, root->n_row);
+        file_row[root->n_row][root->file_num]++;
         inorderTraversal(root->right);
     }
 }
+

@@ -7,6 +7,7 @@
 #define MAX_FILE_NUM 100
 #define TABLE_SIZE 29989
 #define MAX_WORD_SIZE 100 
+#define SPACE " \"\t\n~!@#$%^&*()_+`1234567890-=,./<>?;':[]{}|"
 
 //BST 노드 구조체
 struct Node {
@@ -14,7 +15,7 @@ struct Node {
 	char* data;
 	int file_num;
 	int n_row;
-	char* sentence;
+	//char* sentence;
 	struct Node* left;
 	struct Node* right;
 };
@@ -23,7 +24,7 @@ struct Node {
 typedef struct Docs* Docs_pointer;
 typedef struct {
 	int file_num;
-	char* sentence;
+	//char* sentence;
 	Docs_pointer docs_pointer;
 }Docs;
 
@@ -33,8 +34,8 @@ typedef struct {
 	int				key;
 	//Word			word_original;			// 원래 단어
 	char			word[MAX_WORD_SIZE];	// 모두 소문자로 바꾼 단어
-	int				n_row;
-	Element_pointer link;
+	//int			n_row;
+	//Element_pointer link;
 	Docs			doc;
 	struct Node*	node;
 }Element;
@@ -42,6 +43,8 @@ typedef struct {
 
 //Hash Table
 Element hash_table[TABLE_SIZE];
+
+
 
 //함수 선언
 void fetch_file();
@@ -63,3 +66,5 @@ int total_num_of_documents;
 int total_num_of_indexed_words;
 int total_number_of_comparison;
 int num_comparison_search;
+
+int file_row[1000][MAX_FILE_NUM];
